@@ -1,5 +1,6 @@
 import os
 import json
+import streamlit as st
 from dotenv import load_dotenv
 from pathlib import Path
 from groq import Groq
@@ -7,10 +8,16 @@ from tavily import TavilyClient
 
 load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
-MODEL = "llama3-70b-8192"
+try:
+    GROQ_KEY   = st.secrets["GROQ_API_KEY"]
+    TAVILY_KEY = st.secrets["TAVILY_API_KEY"]
+except Exception:
+    GROQ_KEY   = os.getenv("GROQ_API_KEY")
+    TAVILY_KEY = os.getenv("TAVILY_API_KEY")
 
-groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+MODEL  = "llama-3.3-70b-versatile"
+groq   = Groq(api_key=GROQ_KEY)
+tavily = TavilyClient(api_key=TAVILY_KEY)
 
 
 def chat(system: str, user: str) -> str:
