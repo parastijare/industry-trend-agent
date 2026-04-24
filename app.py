@@ -1,3 +1,5 @@
+import os
+port = int(os.environ.get("PORT", 8501))
 import streamlit as st
 import json
 from agents import trend_researcher, signal_extractor, report_writer, llm_judge
