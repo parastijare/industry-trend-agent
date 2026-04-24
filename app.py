@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 import json
 from agents import trend_researcher, signal_extractor, report_writer, llm_judge
