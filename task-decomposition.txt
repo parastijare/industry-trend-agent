@@ -1,0 +1,157 @@
+TASK DECOMPOSITION AND SPECIFICATIONS
+
+Industry Trend Analysis AI Agent
+
+Student: Paras Tijare
+Branch: B.E. Electronics and Communication
+Roll no.: 116-B
+Semester: IV
+
+SYSTEM OVERVIEW
+
+The proposed system is an agentic AI-based analytical pipeline designed 
+to generate real-time industry insights. 
+It accepts an industry or sector as input and produces a comprehensive, 
+structured trend report along with an automated quality evaluation.
+
+The architecture follows a multi-agent design, where each agent performs 
+a distinct function—data gathering, insight extraction, report synthesis, 
+and evaluation—ensuring modularity and improved output quality.
+
+TASK 1 — REAL-TIME DATA ACQUISITION
+
+Tool: Tavily Search API
+Module: agents.py
+Input: Industry/Sector name
+
+Process:
+
+Executes multiple targeted queries to gather diverse information:
+ -Current industry developments
+ -Investment and funding activities
+ -Market outlook and forecasts
+ -Technological advancements
+Aggregates results from multiple sources into unified raw data
+
+Output: Consolidated text dataset containing recent industry information
+
+Design Rationale:
+Using a dedicated search API ensures relevant, up-to-date, 
+and structured inputs for downstream AI processing.
+
+TASK 2 — INSIGHT GENERATION (Agent 1: Trend Researcher)
+
+Model: LLM via Groq API
+Role: Industry Research Specialist
+
+Input: Raw aggregated data
+
+Process:
+
+Interprets collected information to extract meaningful insights
+Identifies:
+ -Emerging technologies
+ -Market movements
+ -Regulatory or policy changes
+ -Growth indicators and forecasts
+Produces a concise, structured research summary
+
+Output: Organized analytical summary of industry trends
+
+Design Rationale:
+Separating this stage ensures context understanding before structured extraction, 
+improving downstream accuracy.
+
+TASK 3 — TREND SIGNAL IDENTIFICATION (Agent 2: Signal Extractor)
+
+Model: LLM via Groq API
+Role: Strategic Insight Analyst
+
+Input: Research summary
+
+Process:
+
+Detects the most impactful trends from the analysis
+Selects top 5 key signals based on relevance and importance
+Annotates each signal with:
+ -Title
+ -Description
+ -Business implication
+ -Confidence level
+Formats output into structured JSON
+
+Output: Machine-readable representation of key industry trends
+
+Design Rationale:
+Transforms qualitative insights into structured, decision-friendly data.
+
+TASK 4 — REPORT SYNTHESIS (Agent 3: Report Writer)
+
+Model: LLM via Groq API
+Role: Industry Strategy Consultant
+
+Input:
+
+Analytical summary (Agent 1)
+Extracted signals (Agent 2)
+
+Process:
+
+Integrates insights into a professional report format
+Includes sections such as:
+ -Executive Overview
+ -Key Trend Signals
+ -Major Market Players
+ -Investment Highlights
+ -Future Industry Outlook
+Ensures clarity, coherence, and professional tone
+
+Output: Comprehensive industry trend report
+
+Design Rationale:
+Combining multiple inputs enables data-backed narrative generation suitable for decision-making.
+
+TASK 5 — AUTOMATED QUALITY ASSESSMENT (Agent 4: Evaluator)
+
+Model: LLM via Groq API
+Role: Independent Evaluation Agent
+
+Input: Generated report
+
+Process:
+
+Evaluates report across key dimensions:
+ -Factual accuracy
+ -Relevance to the sector
+ -Depth of analysis
+Assigns scores and provides qualitative feedback
+Highlights strengths and improvement areas
+
+Output: Structured evaluation with scoring and summary
+
+Design Rationale:
+Implements an independent evaluation layer, ensuring objectivity and reliability of outputs.
+
+PIPELINE FLOW
+
+Industry Input
+      ↓
+Data Acquisition (Tavily API)
+      ↓
+Agent 1: Insight Generation
+      ↓
+Agent 2: Trend Signal Identification
+      ↓
+Agent 3: Report Synthesis
+      ↓
+Agent 4: Quality Evaluation
+      ↓
+Final Output (Report + Scores)
+
+DEPLOYMENT
+
+Deployment Platform: Streamlit Community Cloud
+Application Type: Interactive AI-based analytics tool
+Programming Language: Python
+Deployment Model: Cloud-based execution
+Live Application:https://industry-trend-agent-aoybvpumomadgkxbbq9giz.streamlit.app/
