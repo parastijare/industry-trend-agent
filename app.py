@@ -4,11 +4,11 @@ from agents import trend_researcher, signal_extractor, report_writer, llm_judge
 
 st.set_page_config(page_title="TrendPulse AI", page_icon="📈", layout="wide")
 
-# ── Sidebar State ────────────────────────────────────────────────
+# Sidebar state
 if "sidebar_open" not in st.session_state:
     st.session_state.sidebar_open = True
 
-# ── CSS ─────────────────────────────────────────────────────────
+# CSS
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap');
@@ -26,7 +26,7 @@ html, body, [class*="css"] {
     position: fixed;
     top: 70px;
     left: 0;
-    width: 280px;
+    width: 260px;
     height: calc(100% - 70px);
     background: rgba(2,8,23,0.95);
     border-right: 1px solid rgba(255,255,255,0.06);
@@ -36,34 +36,31 @@ html, body, [class*="css"] {
 }
 
 .sidebar.closed {
-    left: -260px;
+    left: -240px;
 }
 
-/* Toggle Button */
+/* Toggle button */
 .toggle-btn {
     position: fixed;
     top: 90px;
-    left: 280px;
+    left: 260px;
     background: #0ea5e9;
     color: white;
     border-radius: 50%;
     width: 34px;
     height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 110;
+    z-index: 200;
 }
 
 .toggle-btn.closed {
     left: 10px;
 }
 
-/* Main content shift */
+/* Main content */
 .main-content {
-    margin-left: 300px;
+    margin-left: 280px;
     transition: all 0.3s ease;
 }
 
@@ -71,13 +68,13 @@ html, body, [class*="css"] {
     margin-left: 20px;
 }
 
-/* Pipeline cards */
+/* Cards */
 .pipeline-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
 }
 
 .pipeline-card .name {
@@ -95,33 +92,29 @@ html, body, [class*="css"] {
     display: flex;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.05);
 }
 
 .nav-logo {
-    font-weight: 800;
     color: white;
+    font-weight: 800;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
-# ── Navbar ───────────────────────────────────────────────────────
+# Navbar
 st.markdown("""
 <div class="navbar">
     <div class="nav-logo">TrendPulse AI</div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Toggle Button ────────────────────────────────────────────────
-toggle = st.button("⬅" if st.session_state.sidebar_open else "➡")
-
-if toggle:
+# Toggle logic
+if st.button("⬅" if st.session_state.sidebar_open else "➡"):
     st.session_state.sidebar_open = not st.session_state.sidebar_open
 
-# ── Sidebar ──────────────────────────────────────────────────────
+# Sidebar
 sidebar_class = "sidebar" if st.session_state.sidebar_open else "sidebar closed"
-btn_class = "toggle-btn" if st.session_state.sidebar_open else "toggle-btn closed"
 
 st.markdown(f"""
 <div class="{sidebar_class}">
@@ -129,43 +122,37 @@ st.markdown(f"""
 
     <div class="pipeline-card">
         🔍 <div class="name">Trend Researcher</div>
-        <div class="desc">Fetches latest industry data</div>
+        <div class="desc">Fetches industry insights</div>
     </div>
 
     <div class="pipeline-card">
         📡 <div class="name">Signal Extractor</div>
-        <div class="desc">Finds key trend signals</div>
+        <div class="desc">Finds key signals</div>
     </div>
 
     <div class="pipeline-card">
         ✍️ <div class="name">Report Writer</div>
-        <div class="desc">Creates final report</div>
+        <div class="desc">Builds report</div>
     </div>
 
     <div class="pipeline-card">
         ⚖️ <div class="name">LLM Judge</div>
-        <div class="desc">Evaluates quality</div>
+        <div class="desc">Evaluates output</div>
     </div>
-</div>
-
-<div class="{btn_class}">
-    {"⬅" if st.session_state.sidebar_open else "➡"}
 </div>
 """, unsafe_allow_html=True)
 
-# ── Main Wrapper ────────────────────────────────────────────────
+# Main wrapper
 main_class = "main-content" if st.session_state.sidebar_open else "main-content full"
 st.markdown(f'<div class="{main_class}">', unsafe_allow_html=True)
 
-# ── Hero ─────────────────────────────────────────────────────────
+# App UI
 st.title("📈 TrendPulse AI")
-st.write("Generate real-time industry trend reports using AI agents.")
+st.write("AI-powered industry trend analysis using multi-agent pipeline.")
 
-# ── Input ────────────────────────────────────────────────────────
-sector = st.text_input("Enter Industry (e.g. FinTech, AI, HealthTech)")
+sector = st.text_input("Enter Industry (e.g. AI, FinTech, HealthTech)")
 run = st.button("Analyse")
 
-# ── Run Pipeline ─────────────────────────────────────────────────
 if run and sector:
 
     with st.spinner("Running agents..."):
@@ -174,11 +161,16 @@ if run and sector:
         report = report_writer(sector, research, signals_raw, print)
         judge = llm_judge(sector, report, print)
 
-    st.subheader("📡 Signals")
+    st.subheader("📡 Trend Signals")
     try:
-        data = json.loads(signals_raw)
+        clean = signals_raw.strip().replace("```json", "").replace("```", "")
+        data = json.loads(clean)
+
         for s in data.get("signals", []):
-            st.markdown(f"**{s['title']}** — {s['description']}")
+            st.markdown(f"**{s['title']}**")
+            st.write(s["description"])
+            st.caption(f"Impact: {s['why_it_matters']} | Confidence: {s['confidence']}")
+
     except:
         st.write(signals_raw)
 
@@ -189,8 +181,6 @@ if run and sector:
     st.write(judge)
 
 elif run:
-    st.warning("Enter a sector")
+    st.warning("Please enter a sector.")
 
-# ── Close Wrapper ───────────────────────────────────────────────
 st.markdown("</div>", unsafe_allow_html=True)
-```
