@@ -6,7 +6,7 @@ from pathlib import Path
 from groq import Groq
 from tavily import TavilyClient
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
 try:
     GROQ_KEY   = st.secrets["GROQ_API_KEY"]
