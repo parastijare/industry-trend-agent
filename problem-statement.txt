@@ -1,0 +1,68 @@
+PROBLEM STATEMENT
+
+Industry Trend Report AI Agent
+
+Student: Paras Tijare
+Branch: B.E. Electronics and Communication
+Roll no.: 116-B
+Semester: IV
+
+USER
+
+Business analysts, researchers, entrepreneurs, students, and decision-makers
+who need to stay updated with latest industry trends, emerging technologies, and market insights.
+
+PROBLEM
+
+Tracking and analyzing industry trends manually requires extensive research across multiple sources such as news websites, blogs, reports, and online platforms.
+This involves collecting scattered information and synthesizing it into meaningful insights, which is time-consuming, inefficient, and often inconsistent.
+
+CURRENT SOLUTION
+
+Manual research using search engines, reading articles, reports, and industry blogs, and compiling insights into documents or presentations.
+Organizations may also rely on market research firms or analysts for trend reports.
+
+
+LIMITATIONS OF CURRENT APPROACH
+
+Time-consuming (hours or days of manual effort)
+Information overload from multiple unstructured sources
+Lack of real-time insights
+Human bias in interpreting trends
+Expensive when relying on professional analysts or reports
+
+WHY AN AI AGENT IS NEEDED
+
+A simple chatbot is not sufficient because:
+It cannot continuously fetch and analyze real-time data from multiple sources
+It cannot break down the task into research, analysis, and summarization steps
+It lacks the ability to reason, refine, and validate insights autonomously
+
+An agentic AI system overcomes these limitations by combining:
+Live data retrieval
+Task decomposition into specialized agents
+Autonomous reasoning and structured output generation
+
+SOLUTION
+
+Industry Trend AI Agent — a multi-agent system that:
+Collects real-time data from multiple online sources
+Uses Agent 1 to gather and filter relevant industry information
+Uses Agent 2 to analyze patterns and identify emerging trends
+Uses Agent 3 to generate structured summaries and insights
+Uses Agent 4 to refine and validate output quality
+
+TECH STACK
+
+LLM: Llama 3 (via Groq API / LPU inference)
+Search Tool: Tavily API
+Frontend & Deployment: Streamlit (Streamlit Cloud)
+Language: Python 3
+
+LIVE DEMO
+
+https://industry-trend-agent-aoybvpumomadgkxbbq9giz.streamlit.app/
+
+GITHUB
+
+https://github.com/parastijare/industry-trend-agent.git
